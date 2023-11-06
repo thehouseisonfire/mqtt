@@ -26,7 +26,7 @@ https://github.com/eclipse/paho.mqtt.python
 ## Arquitetura
 
 clients/id  ->  Group Invite "GI {GROUP_NAME}"      ->  Cliente (decide/se) inscreve no grupo.
-                Request "REQUEST {CLIENT_NAME2}"    ->  Cliente decide se quer aceitar pedido de conversa de Cliente 2 (cria o topico se sim).
+                Request "REQUEST {CLIENT_NAME2}"    ->  Cliente decide se quer aceitar pedido de conversa do Cliente 2 (cria o topico se sim).
                 Accepted "TIMESTAMP {CLIENT_NAME}"  ->  Cliente aceitou pedido de conversa de Cliente 2.
                 Denied "DENIED {CLIENT_NAME}"       ->  Cliente informa Cliente 2 que não aceitou pedido de conversa.
 
@@ -39,6 +39,11 @@ groups/info ->  Group Created "{GROUP_NAME} CREATE"         ->  Lider informa a 
 groups/name/members     ->  Member ID "{MEMBER_ID}"                 -> Membro informa seu ID quando integrado
 groups/name/messages    ->  Member Message "{MEMBER_ID} {MESSAGE}"  -> Membro escreve uma mensagem (todos os membros à vem)
 groups/name/leader      ->  Outsider Message "{CLIENT_ID} ENTER"    -> Cliente externo requesita entrada no grupo
+
+C1_C2_TIMESTAMP  -> {CLIENT_ID} Message   -> Cliente X posta seu ID antes de sua mensagem
+C1_C2_TIMESTAM   -> END                   -> Cliente X posta `END` quando deseja terminar a conversa. 
+                                             Qualquer nova mensagem é conhecida com uma revogação. 
+                                             Quando ambos os partidos desejam terminar, o tópico pode ser marcado para limpeza.
 
 
 ## requesitos
